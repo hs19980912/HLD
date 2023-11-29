@@ -1,0 +1,14 @@
+CAP: Desirable property of distributed system with Replicated data.
+
+C: Consistency
+A: Availability         // All the DB nodes should atleast respond.
+                        // The response can be anything: Sucess/Faliure
+P: Partition Tolerance  // In a distributed system, the user should be able to QUERY 
+                        // even when there is a communition breakage between nodes.
+                        // Even in the case of partition, system should be UP.
+                        
+
+The distributed system should always be Partition Tolerant.
+
+We should always try to compromise with Consistency or availability if possible. 
+
