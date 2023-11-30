@@ -1,0 +1,55 @@
+Monolithic architecture:
+    - Difficult to debug, maintain, deploy.
+    - Tightly coupled
+    
+Microservices:
+    - Managing is easy
+    - Scalablility is easy
+    - Deployment is easy
+    
+
+some challenges in designing Microservices:
+    - Decomposition should be as loose coupled as possible.
+    - Latency can go up.
+    - If some changes are made to one of the microservice,
+      when this service goes live, its clients can get impacted.
+    - Transaction management is little difficult.
+    
+
+Decomposition | Database | Communication | Integration     
+
+
+Microservices:
+Different phases in defining microservices
+    - Decomposition:
+                    - by Business capibility
+                    - by sub-domain.
+    - Database:
+                    - Same database for all the services
+                    - Different database for all services
+    - Communication:
+                    - API
+                    - Event based communication
+    - Integration:
+                    - API gateways,..
+    
+    
+Decomposition Pattern:
+    
+    - By Business capibility:
+            eg: Order Management    // One complete microservice
+                Product management  // one complete microservice
+                Billing management  // complete microservice
+                Payment management  // complete microservice
+         Challenges:
+                Good knowlege what is the business capibility
+                
+    - By Sub-Domain:
+            eg: Order Management    // One domain
+                    - Order tracking        // single microservice    
+                    - Order Placing         // single microservice
+                Payment Management  // One domain
+                    - Forward payment       // single microservice
+                    - Reverse payment       // single microservice
+           
+                
