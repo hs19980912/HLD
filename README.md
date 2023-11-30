@@ -9,3 +9,9 @@
 #2
  - CAP Theorem
  - Never Tradeoff P(Partition tolerance)
+
+#3
+ - Monolithic and Microservices architecture.
+ - Decomposition Pattern
+     - By Business capibility
+     - by sub domain
