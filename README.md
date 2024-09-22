@@ -37,6 +37,18 @@
    ![image](https://github.com/hs19980912/HLD/assets/63532987/cfd19c2c-fe4c-4517-ab46-f938e3ef6430)
 
 
+## Database management in Microservices
+    There are 2 ways of database management:
+    1. separate DB for each service.
+    2. single DB for the entire application.
 
+## Separate DB for each microservice is the preferred way
+    It has several advantages like decoupling, scalability, tailored data model etc.
+
+    But it also has 2 major complexities in seperate DB approach.
+    1. Maintaining the transactional property i.e ACID properties.
+    2. Join operations.
+  
+    SAGA pattern and CQRS overcomes these complexities in separate DB approach.
 
 

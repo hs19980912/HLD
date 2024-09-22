@@ -8,7 +8,7 @@ In summary:
     HTTP (Stateless): Each request is independent; no memory of 
     previous interactions.
     WebSockets (Stateful): Persistent connection allows for ongoing communication and context retention.    
-
+#
 ### Examples of Client Server architecture
     Client-server architecture is a computing model where client devices request services and resources from centralized servers. Here are some common examples:
     
@@ -51,3 +51,25 @@ In summary:
 
     Example: Microsoft Remote Desktop, TeamViewer.
     How It Works: The client connects to a remote server, allowing users to access and control another computer remotely.
+##
+### Why is separate database for each microservice the preferred way over single DB for the entire application?
+    Using a separate database for each microservice offers several advantages over a single database approach:
+
+1. **Decoupling**: Each microservice operates independently, allowing teams to develop, deploy, and scale them without affecting others. This autonomy minimizes the risk of changes in one service impacting others.
+
+2. **Tailored Data Models**: Different services often have distinct data requirements. Separate databases allow each microservice to use the most suitable data model and database technology (SQL, NoSQL, etc.) for its needs.
+
+3. **Scalability**: Independent databases can be scaled individually based on the specific needs of each microservice, enabling more efficient resource allocation.
+
+4. **Fault Isolation**: If one service's database encounters issues, it doesn’t necessarily compromise the entire application. This enhances overall system reliability.
+
+5. **Data Governance and Security**: Each service can implement its own security policies, access controls, and data governance practices, allowing for better compliance and data management.
+
+6. **Independent Deployment**: With separate databases, microservices can be deployed independently, facilitating continuous delivery and integration practices.
+
+7. **Easier Technology Upgrades**: Teams can update or change their databases without coordinating with others, enabling more flexibility in adopting new technologies.
+
+8. **Clear Ownership**: Separate databases establish clear ownership of data within teams, fostering accountability and focused expertise.
+
+Overall, this approach aligns with the microservices architecture's core principles of autonomy and flexibility, leading to a more maintainable and resilient system.
+#
