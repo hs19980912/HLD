@@ -19,3 +19,14 @@
 #4
  - Strangler Pattern:
    ![image](https://github.com/hs19980912/HLD/assets/63532987/cfd19c2c-fe4c-4517-ab46-f938e3ef6430)
+
+- Application Layer
+  - Client Server protocal
+    - HTTP (Stateless)
+    - FTP
+    - SMTP
+    - Web Sockets (Stateful)
+  - P2P protocol
+    - WebRTC
+
+
