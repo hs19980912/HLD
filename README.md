@@ -46,9 +46,14 @@
     It has several advantages like decoupling, scalability, tailored data model etc.
 
     But it also has 2 major complexities in seperate DB approach.
-    1. Maintaining the transactional property i.e ACID properties.
+    1. Maintaining the transactional property i.e ACID properties over distributed DBs.
     2. Join operations.
   
     SAGA pattern and CQRS overcomes these complexities in separate DB approach.
 
+## SAGA pattern - solving transactional integrity
+    SAGA pattern solves the challenge of a transaction spanning a distributed DB. It helps maintain data consistency across services using sequence of local transactions.
 
+    SAGA - Sequence of local events
+
+## CQRS - Solving joins in distributed DBs
