@@ -8,11 +8,12 @@ Microservices:
     - Deployment is easy
     
 
-some challenges in designing Microservices:
+Challenges in designing Microservices:
     - Decomposition should be as loose coupled as possible.
     - Latency can go up.
     - If some changes are made to one of the microservice,
       when this service goes live, its clients can get impacted.
+      So monitoring the main source of error becomes difficult.
     - Transaction management is little difficult.
     
 

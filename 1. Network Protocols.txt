@@ -13,48 +13,47 @@ Our point of focus:
     
     Application Layer:  
         Client-server protocols 
-                    : HTTPS             // Web broswer is client
-                                        // Web server is server
-                                        // Client make a request TO server, server fulfills that request.
-                                        // Server CANNOT make a request to client.(in web sockets even servers can make requests)
-                                        // Connection oriented.
+                    : HTTPS             Web broswer is client
+                                        Web server is server
+                                        Client make a request TO server, server fulfills that request.
+                                        Server CANNOT make a request to client.(in web sockets even servers can make requests)
+                                        Generally uses TCP(TCP is connection oriented).
                     
-                    : FTP               // 2 connections are maintained.
-                                        // Control connection
-                                        // Data connection: can be create/disconnected, but control connection is always ON
-                    
-                    : SMTP(Mail)        // always used with IMAP and POP
-                                        // SMTP: sending the mail
-                                        // IMAP: reading the mail
-                                        // It also has a client server inside
-                                        // mail send -> user agent -> MTA client
+                    : FTP               2 connections are maintained.
+                                        Control connection
+                                        Data connection: can be create/disconnected, but control connection is always ON
+                                        Generally not used because the data connection is not encrypted.
+
+                    : SMTP(Mail)        always used with IMAP and POP
+                                        SMTP: sending the mail
+                                        IMAP: reading the mail
+                                        It also has a client server inside
+                                        mail send -> user agent -> MTA client
                                                                           |
-                                       mail received <- user agent <- MTA server
+                                        mail received <- user agent <- MTA server
                     
-                    : Web Sockets       // Here also only client server communication possible,
-                                        // Server CAN also make a request to the client.
-                                        // but clients cannot talk to each other(in webRTC even clients can talk to each other)
-                                        // eg: WhatsApp, telegram, messaging apps
-                                        // We do not want our app to constantly ask if they have received any message.,
-                                           hence server can also talk to client. 
+                    : Web Sockets       Here also only client server communication possible,
+                                        Server CAN also make a request to the client.
+                                        but clients cannot talk to each other(in webRTC even clients can talk to each other)
+                                        eg: WhatsApp, telegram, messaging apps
+                                        We do not want our app to constantly ask if they have received any message.,hence server can also talk to client. 
                                         
         Peer-to-Peer
-                    : WebRTC            // Here clients can talk to the server, AND 
-                                        // clients can talk to each other also unlike web sockets.
-                                        // IT USED UDP.
+                    : WebRTC            Here clients can talk to the server, AND 
+                                        clients can talk to each other also unlike web sockets.
+                                        IT USES UDP.
 
     
     Transport Layer/ Network Layer:
         
-                    : TCP/IP            // We maintain VIRTUAL Connection
-                                        // We have a sequence of the data
-                                        // proper acknowledgment is given for every packet.
+                    : TCP/IP            TCP maintains a VIRTUAL Connection.
+                                        We have a sequence of the data.
+                                        proper acknowledgment is given for every packet.
                                         
                     
-                    : UDP/IP            // No connection is maintained.
-                                        // Divide data in multiple datagrams,
-                                           and send it to multiple virtual connection
-                                        // No ordering maintained, so there are chances of mis ordering at the receiver
-                                        // But is is FAST
-                                        // eg: Live streaming, Video calling
+                    : UDP/IP            No connection is maintained.
+                                        Divide data in multiple datagrams, and send it to multiple virtual connection
+                                        No ordering maintained, so there are chances of mis ordering at the receiver
+                                        But is is FAST
+                                        eg: Live streaming, Video calling
                     
