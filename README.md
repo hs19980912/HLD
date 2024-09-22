@@ -27,7 +27,13 @@
      - by sub domain
 
 ## 4. Strangler Pattern
- - Strangler Pattern:
+    Generally used when refactoring the code
+    i.e migrating from monolothic to microservice architecture.
+
+    Key Components:
+    1. Incremental Replacement
+    2. Proxy layer
+
    ![image](https://github.com/hs19980912/HLD/assets/63532987/cfd19c2c-fe4c-4517-ab46-f938e3ef6430)
 
 
