@@ -4,6 +4,7 @@
 - This video is part of a series on system design concepts, focusing on scaling from 0 users to 1 million users.
 - Covers various concepts like sharding, horizontal and vertical scaling, load balancing, caching, and messaging queues.
 
+![3-tier-architecture](https://github.com/user-attachments/assets/09a09b9d-1923-4431-8a76-3ca417accda8)
 
 ### Steps for Scaling:
 
