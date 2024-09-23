@@ -56,4 +56,9 @@
 
     SAGA - Sequence of local events
 
+## TODO - Types of Sagas 
+  - SAGA
+    - Choreography: Each service manages its own transactions and listens to events from other services.
+    - Orchestration: A centralized orchestrator manages the transaction flow and handles compensation logic.
+    
 ## CQRS - Solving joins in distributed DBs
