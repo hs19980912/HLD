@@ -8,8 +8,8 @@
 ## 2. STEPS
 1. **Partition**: `Consistent hashing` 
 2. **Replication**: `Coordinator`, `Preference List`
-3. GET and PUT requests
-4. Data Versioning
+3. **GET and PUT requests**: `R + W > N`
+4. **Data Versioning**: `Vector Clocks`, `Client side conflict resolution`
 5. GOSSIP protocol
 6. Merkel Tree
 
