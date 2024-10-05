@@ -9,9 +9,9 @@
 1. **Partition**: `Consistent hashing` 
 2. **Replication**: `Coordinator`, `Preference List`
 3. **GET and PUT requests**: `R + W > N`
-4. **Data Versioning**: `Vector Clocks`, `Client side conflict resolution`
-5. GOSSIP protocol
-6. Merkel Tree
+4. **Data Versioning**: `Vector Clocks`, `Client side conflict resolution`, `Eventual Consistency`
+5. **GOSSIP protocol**: `Node sending periodic status update`
+6. **Merkel Tree**: `Hash tree`
 
 ## Client-Side Conflict Resolution
 
