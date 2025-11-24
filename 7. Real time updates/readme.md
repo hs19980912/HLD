@@ -1,7 +1,38 @@
-1. Polling
-2. Long Polling
-3. SSE
-4. Web Sockets
+Real Time Updates
+  - Server-To-Client
+    1. Polling
+    2. Long Polling
+    3. SSE
+        - EventSource API at Client's side.
+        - 
+        - Real systems scale SSE with Redis Pub/Sub.
+    4. Web Sockets
+  - Inter Server communication
+    - Server using Pub/Sub to to listen to updates.
+
+
+Misc:
+  - HTTP/2 Multiplexing (Application level), and TCP multiplexing (Transport level)
+  - HTTP/2 fixes application-level head-of-line blocking, But TCP still causes transport-level head-of-line blocking
+  - History:
+    - HTTP/1.0 chose to close after each request
+    - HTTP/1.1 added keep-alive
+    - HTTP/2 required a persistent TCP connection
+  - HTTP/2 is still 100% compliant with HTTP spec
+    - every request has its own stream ID, HEADERS frame, DATA frames, END_STREAM flag
+  - How Chrome Manages Streams Inside HTTP/2
+  - Why HTTP/2 Multiplexing Is Powerful
+    - Without HTTP/2 (HTTP/1.1):
+        - Browser opens max 6 connections per domain
+        - SSE consumes 1 full TCP connection
+        - Loading more data competes for connections
+    - With HTTP/2:
+        - Browser opens 1 TCP connection total
+        - Images, CSS, JS, API calls, SSE all happen in parallel
+        - No head-of-line blocking (HOLB) at HTTP layer
+        - One SSE stream doesn’t block other requests
+
+
 
 
 ### What makes SSE better than Long polling:
