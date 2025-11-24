@@ -21,6 +21,7 @@
         - Works on "upgrade" protocol. After initial HTTP handshake, the protocol gets converted to L4, purely TCP based.
         - Needs L4 LB with sticky sessions.
         - Statefulness introduces a lot of challenges in deployments and Scaling.
+        - Using a "least connections" strategy at the load balancer helps distribute WebSocket clients more evenly across endpoint servers.
     5. **Push notifications**
     6. **WebRTC**
   - Inter Server communication
