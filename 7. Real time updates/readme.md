@@ -1,23 +1,26 @@
-Real Time Updates
+**Real Time Updates**
   - Server-To-Client
-    1. Polling
-    2. Long Polling
-    3. SSE
+    1. **Polling**
+    2. **Long Polling**
+    3. **SSE**
         - EventSource API at Client's side.
         - 
-        - Real systems scale SSE with Redis Pub/Sub.
-    4. Web Sockets
+        - infra:
+          - Each server instance holds its own active SSE connections
+          - Real systems scale SSE with Redis Pub/Sub.
+    4. **Web Sockets**
+    4. **Push notifications**
   - Inter Server communication
     - Server using Pub/Sub to to listen to updates.
 
 
-Misc:
+**Misc:**
   - HTTP/2 Multiplexing (Application level), and TCP multiplexing (Transport level)
   - HTTP/2 fixes application-level head-of-line blocking, But TCP still causes transport-level head-of-line blocking
-  - History:
-    - HTTP/1.0 chose to close after each request
-    - HTTP/1.1 added keep-alive
-    - HTTP/2 required a persistent TCP connection
+    - History:
+      - HTTP/1.0 chose to close after each request
+      - HTTP/1.1 added keep-alive
+      - HTTP/2 required a persistent TCP connection
   - HTTP/2 is still 100% compliant with HTTP spec
     - every request has its own stream ID, HEADERS frame, DATA frames, END_STREAM flag
   - How Chrome Manages Streams Inside HTTP/2
@@ -64,6 +67,8 @@ We already had Long polling. We also saw that in modern systems, very efficient 
 | Low latency                       | ⚠ Almost     | ✔ True                |
 | Works with high-frequency updates | ❌ Struggles  | ✔ Perfect             |
 | Uses browser API                  | ❌ No         | ✔ Yes (`EventSource`) |
+
+
 
 
 
