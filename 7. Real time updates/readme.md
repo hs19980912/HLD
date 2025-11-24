@@ -16,11 +16,12 @@
           - Real systems scale SSE with Redis Pub/Sub.
           - 
     4. **Web Sockets**
-        - Works on "upgrade" protocol.
-        - After initial HTTP handshake, the protocol gets converted to L4, purely TCP based.
+        - Full-Duplex nature and highly performant(since we reduce the http overload).
+        - Works on "upgrade" protocol. After initial HTTP handshake, the protocol gets converted to L4, purely TCP based.
         - Needs L4 LB with sticky sessions.
-        -
+        - Statefulness introduces a lot of challenges in deployments and Scaling.
     5. **Push notifications**
+    6. **WebRTC**
   - Inter Server communication
     - Server using Pub/Sub to to listen to updates.
 
