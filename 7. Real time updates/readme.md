@@ -4,12 +4,23 @@
     2. **Long Polling**
     3. **SSE**
         - EventSource API at Client's side.
-        - 
-        - infra:
-          - Each server instance holds its own active SSE connections
+        - Content-Type: text/event-stream
+        - Connection: keep-alive
+        - Cache-Control: no-cache
+        - Works great with L7 LB and needs sticky sessions.
+        - Reconnection: 
+          - EventSource object explicitly handles the reconnection logic.
+          - "Last event ID" received can is used at the client side for at-least-once-guarantee delivery.
+        - Infra:
+          - Each server instance holds its own active SSE connections.
           - Real systems scale SSE with Redis Pub/Sub.
+          - 
     4. **Web Sockets**
-    4. **Push notifications**
+        - Works on "upgrade" protocol.
+        - After initial HTTP handshake, the protocol gets converted to L4, purely TCP based.
+        - Needs L4 LB with sticky sessions.
+        -
+    5. **Push notifications**
   - Inter Server communication
     - Server using Pub/Sub to to listen to updates.
 
