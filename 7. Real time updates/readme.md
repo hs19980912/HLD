@@ -3,6 +3,7 @@
     1. **Polling**
     2. **Long Polling**
     3. **SSE**
+        - SSE uses the text/event-stream MIME type and chunked transfer encoding to stream events from server to client.
         - EventSource API at Client's side.
         - Content-Type: text/event-stream
         - Connection: keep-alive
