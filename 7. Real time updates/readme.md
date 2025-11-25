@@ -4,10 +4,11 @@
     2. **Long Polling**
     3. **SSE**
         - SSE uses the text/event-stream MIME type and chunked transfer encoding to stream events from server to client.
-        - EventSource API at Client's side.
-        - Content-Type: text/event-stream
-        - Connection: keep-alive
-        - Cache-Control: no-cache
+        - $EventSource$ API at Client's side.
+        - HTTP headers:
+          - Content-Type: text/event-stream
+          - Connection: keep-alive
+          - Cache-Control: no-cache
         - Works great with L7 LB and needs sticky sessions.
         - Reconnection: 
           - EventSource object explicitly handles the reconnection logic.
@@ -18,7 +19,7 @@
           - 
     4. **Web Sockets**
         - Full-Duplex nature and highly performant(since we reduce the http overload).
-        - Works on "upgrade" protocol. After initial HTTP handshake, the protocol gets converted to L4, purely TCP based.
+        - Works on $upgrade$ protocol. After initial HTTP handshake, the protocol gets converted to L4, purely TCP based.
         - Needs L4 LB with sticky sessions.
         - Statefulness introduces a lot of challenges in deployments and Scaling.
         - Using a "least connections" strategy at the load balancer helps distribute WebSocket clients more evenly across endpoint servers.
@@ -54,7 +55,11 @@
 
 ### What makes SSE better than Long polling:
 ```
-We already had Long polling. We also saw that in modern systems, very efficient type of long polling has been developed which do not cause any thread overload in the server side an also prevent busy waiting in the server side. So what inherent benefits does SSE provide over the long polling that long polling cannot do?
+We already had Long polling. We also saw that in modern systems, very efficient type of long polling 
+has been developed which do not cause any thread overload in the server side an also prevent busy waiting 
+in the server side. 
+
+So what inherent benefits does SSE provide over the long polling that long polling cannot do?
 ```
 
 - **SSE Removes the Repeated Connection Overhead (Long Polling Cannot)**
