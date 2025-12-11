@@ -7,6 +7,7 @@
     - Hence SQS is great for Parallel job processing.
     - This is a classic example of load balancing and not broadcasting.
     -  This is why SQS is NOT Event Streaming.
+
 - Kafka follows Event Drive Architecture(EDA).
     - Common usecases:
     - Event-Driven Microservices
@@ -15,10 +16,21 @@
     - Change Data Capture (CDC) From Databases
     - Stream Processing (Kafka + Flink / Spark)
     - Event Sourcing: 
-        - Instead of storing the latest state, you store every change as an immutable event.
-The current state is rebuilt by replaying all past events. (Bank balance)
+        - Instead of storing the latest state, you store every change as an immutable event. The current state is rebuilt by replaying all past events. (Bank balance)
     - Metrics Collection & Monitoring
 
+- Kafka
+    - Topic 1
+        - Partition 1
+        - Partition 2
+        - ...
+    - Topic 2
+        - Partition 1
+        - Partition 2
+        - ...
+    
+    - Consumer groups
+        - Within a consumer group, a partition can be consumed by exactly ONE consumer.
 
 ## SQS - Competing consumers model
 
