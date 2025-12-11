@@ -1,7 +1,8 @@
 
 - Always remember the nuances between Queueing and Braodcasting(Event streaming).
 - Event Streming(Kafka), vs Task processing(SQS)
-
+- Kafka doesnot support consumer retries, but SQS does. 
+    - kafka has more detailed Main topic, Retry topic and DLQ topic.
 - SQS follows competing consumers model.
     - When multiple consumers listening to the same queue, only one of them receives the message.
     - Hence SQS is great for Parallel job processing.
@@ -41,6 +42,17 @@
         - Value
         - Timestamp
 
+- Some questions on Kafka:
+    - What happens when Kafka goes down?
+        - Not a good question since kafka doenot go down. It is due to the durability guarantee.
+    - What happens when a consumer goes down?
+        - Just read the latest offset
+        - If a consumer group, rebalance
+    - Error and Retries:
+        - Producer Retries:
+            - Simple retries mechanism
+        - Consumer retries(imp):
+            - 
 ## SQS - Competing consumers model
 
 Multiple listeners (consumers) can listen to the same SQS queue — but each message will be delivered to only one of them. This is called the **competing consumers model**.  
@@ -61,4 +73,9 @@ It is not fan-out like Kafka.
 
 ![alt text](image-4.png)   
 
+
+
+## consumer retries in kafka
+
+![alt text](image-5.png)  
 
