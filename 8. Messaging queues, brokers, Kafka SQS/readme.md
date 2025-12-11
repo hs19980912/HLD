@@ -31,6 +31,15 @@
     
     - Consumer groups
         - Within a consumer group, a partition can be consumed by exactly ONE consumer.
+        - No two consumers in the same group can read the same partition.
+        - kafka mains the commit ID for each partition.
+
+- Kafka Componenets
+    - $Record$
+        - Headers
+        - Key
+        - Value
+        - Timestamp
 
 ## SQS - Competing consumers model
 
@@ -39,3 +48,17 @@ Multiple listeners (consumers) can listen to the same SQS queue — but each mes
 It is not fan-out like Kafka.
 
 ## Hence, SQS is good of achieving parallel job processing
+
+## When is kafka Needed?
+![alt text](image.png)  
+
+![alt text](image-1.png)  
+
+![alt text](image-2.png)  
+
+![alt text](image-3.png)  
+
+
+![alt text](image-4.png)   
+
+
