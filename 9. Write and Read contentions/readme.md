@@ -65,12 +65,15 @@
         - **Dirty read**: reads uncommitted data from another transaction.
         - **Non-repeatable read**: same row, different values after another transaction’s committed update.
         - **Pantom read**: same query predicate, different rows returned after another transaction’s committed insert/delete.
-
-```
-| Isolation Level  | Dirty Reads  | Non-Repeatable Reads | Phantom Reads |
-| ---------------- | ------------ | -------------------- | ------------- |
-| Read Uncommitted | Possible     | Possible             | Possible      | High concurrency
-| Read Committed   | Not possible | Possible             | Possible      |
-| Repeatable Read  | Not possible | Not possible         | Possible      |
-| Serializable     | Not possible | Not possible         | Not possible  | Low concurrency
-````
+        ```
+        | Isolation Level  | Dirty Reads  | Non-Repeatable Reads | Phantom Reads |
+        | ---------------- | ------------ | -------------------- | ------------- |
+        | Read Uncommitted | Possible     | Possible             | Possible      | High concurrency
+        | Read Committed   | Not possible | Possible             | Possible      |
+        | Repeatable Read  | Not possible | Not possible         | Possible      |
+        | Serializable     | Not possible | Not possible         | Not possible  | Low concurrency
+        ```
+    - Read Uncommitted:
+    - Read Committed:
+    - Repeatable Read:
+    - Serializable:
