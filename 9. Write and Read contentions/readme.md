@@ -1,3 +1,100 @@
+
+### "Read" and "Write" contentions are different problems in distributed systems
+
+- Reads want visibility and consistency.
+- Writes want ordering and conflict resolution. 
+- **Note:** Scaling writes is a much harder problem to solve. It requires ordering, conflict resolution and agreement across nodes. These properties inherently demand coordination, which introduces latency and serialization.  
+- **Read contention:**
+    - Problem:
+        - Many clients wants to read same data.
+        - Reads dont modify state.
+        - Blocking reads kills throughput.
+    - Challenges:
+        - Stale reads
+        - Inconsistent snapshots
+        - Replica lag
+    - Typical Solutions:
+        - MVCC (Readers dont block writers)
+        - Replication (Scale read horizontally)
+        - Caching (Redis, CDN..) (Avoid DB entirely)
+        - Read-only snapshots (Consistent analytics)
+        - Eventual consistency (Trades freshness for scale)
+- **Write contention:**
+    - Problem:
+        - Multiple clients want to modify the same logical data.
+        - Writes must preserve correctness.
+    - Challenges:
+        - Lost updates
+        - Ordering
+        - Conflicts
+        - Distributed coordination
+    - Typical solutions:
+        - Leader-based wirtes (Single authority)
+        - Optimistic concurrency(CAS/version) (Detect conflicts)
+        - Pessimistic locking (Prevents conflicts)
+        - Sharding (Reduces contention domain)
+        - CRDTs (Conflict-free Replicated Data Types) (Avoid conflicts entirely) 
+
+
+## Read Contention
+
+- **Transaction**
+    - In releational databases, a transaction is a logical unit of work that groups one or more SQL operations so they are treated as one single indivisible operation. 
+    - Every relational database transaction guarantees ACID.
+- **DB Locking**
+    - No other transaction updates the locked Row.
+    - 2 types:
+        1. Shared lock (Read purpose) (S)
+        2. Exclusive lock (Write purpose) (X)
+    - If a Tx has Shared Lock: 
+        - Other Tx can aquire a Shared lock
+        - Other Tx cannot aquire an Exclusive lock
+    - If a Tx has Exclusive lock:
+        - Other Tx cannot aquire Shared lock
+        - Other Tx cannot aquire Exclusive lock
+- **Isolation level**
+    - SQL isolation levels define how visible other transactions changes are to a running transaction.
+    - Isolation level in a way determins the concurrecncy level a system can handle.
+    - **Read anamolies**:
+        - **Dirty read**: A Tx reads uncommitted data written by another Tx (Reading data that was never committed).
+        - **Non-repeatable read**: A Tx reads the same row twice and gets different values (Reading commited data that later got changed).
+        - **Pantom read**: same query predicate, different rows returned after another transaction’s committed insert/delete.
+    - **Isolation levels:**
+        ```
+        | Isolation Level  | Dirty Reads  | Non-Repeatable Reads | Phantom Reads |
+        | ---------------- | ------------ | -------------------- | ------------- |
+        | Read Uncommitted | Possible     | Possible             | Possible      | High concurrency
+        | Read Committed   | Not possible | Possible             | Possible      |
+        | Repeatable Read  | Not possible | Not possible         | Possible      |
+        | Serializable     | Not possible | Not possible         | Not possible  | Low concurrency
+        ```
+        - Read Uncommitted: Almost never used.
+        - Read Committed: Most commonly used in real world.
+        - Repeatable Read: MVCC-based repeatable read (Snapshot Isolation) is also very common.
+        - Serializable: Used only in specific critical cases. 
+    - **Locking Strategy:**
+        - **Note:** Modern databases uses MVCC based isolation levels.
+        1. **Read uncommited:** 
+            - No locks.
+        2. **Read commited: MVCC based**  
+            **Reads:** 
+            - No shared lock → Read from a snapshot (Snapshot is per statement) → Never block writes
+            - Performance:
+                - Snapshot is per statement
+                - After a statement finishes: snapshot is gone.
+                - Old versions become obsolete quickly.
+                - Vacuum/GC can clean aggersively. Hence better performance than MVCC based "Repeatable Read".   
+
+            **Writes:** 
+            - Acquire X lock on row → creates new version → lock held until commit → Prevents other writers
+        3. **Repeatable Read: MVCC based**  
+            **Reads:**
+            - f
+
+            **Writes:**
+
+
+## Write contention
 - One important gyan ki baat: 
     - **In distributed systems, locks are expensive. Retries are cheaper than waiting.**
 
@@ -7,7 +104,7 @@
 
 - __Pessimistic locking__:
     - What is a lock?
-        - It is simply **Shared state + enforcement logic** hat everyone agrees to respect.
+        - It is simply **Shared state + enforcement logic** that everyone agrees to respect.
     - Where does this lock live?
         - On some authoritative component that all writers must talk to.
     - In distributed systems, this authority can live in three main places:
@@ -44,36 +141,3 @@
 - **Optimistic concurrency**
     - 
 
-
-
-- **Transaction**
-    - Transaction helps to achieve INTEGRITY. It helps us to avaoid Inconsistency in databases.
-- **DB Locking**
-    - No other transaction updates the locked Row
-    - 2 types:
-        1. Shared lock (Read purpose) (S)
-        2. Exclusive lock (Write purpose) (X)
-    - If a Tx has Shared Lock: 
-        - Other Tx can aquire a Shared lock
-        - Other Tx cannot aquire an Exclusive lock
-    - If a Tx has Exclusive lock:
-        - Other Tx cannot aquire Shared lock
-        - Other Tx cannot aquire Exclusive lock
-- **Isolation level**
-    - Isolation level determins the concurrecncy level a system can handle.
-    - **Read anamolies**:
-        - **Dirty read**: reads uncommitted data from another transaction.
-        - **Non-repeatable read**: same row, different values after another transaction’s committed update.
-        - **Pantom read**: same query predicate, different rows returned after another transaction’s committed insert/delete.
-        ```
-        | Isolation Level  | Dirty Reads  | Non-Repeatable Reads | Phantom Reads |
-        | ---------------- | ------------ | -------------------- | ------------- |
-        | Read Uncommitted | Possible     | Possible             | Possible      | High concurrency
-        | Read Committed   | Not possible | Possible             | Possible      |
-        | Repeatable Read  | Not possible | Not possible         | Possible      |
-        | Serializable     | Not possible | Not possible         | Not possible  | Low concurrency
-        ```
-    - Read Uncommitted:
-    - Read Committed:
-    - Repeatable Read:
-    - Serializable:
