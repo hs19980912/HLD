@@ -77,26 +77,24 @@
         1. **Read uncommited:** 
             - No locks.
         2. **Read Commited: MVCC based**  
-            **Read Committed = “What’s true right now?”**  
-            **Reads:** 
-            - No shared lock → Read from a snapshot (Snapshot is per statement) → Never block writes
-            - Performance:
-                - Snapshot is per statement
-                - After a statement finishes: snapshot is gone.
-                - Old versions become obsolete quickly.
-                - Vacuum/GC can clean aggersively. Hence better performance than MVCC based "Repeatable Read".   
-
-            **Writes:** 
-            - Acquire X lock on row → creates new version → lock held until commit → Prevents other writers
+            - **Read Committed = “What’s true right now?”**  
+            - **Reads:** 
+                - No shared lock → Read from a snapshot (Snapshot is per statement) → Never block writes
+                - Performance:
+                    - Snapshot is per statement
+                    - After a statement finishes: snapshot is gone.
+                    - Old versions become obsolete quickly.
+                    - Vacuum/GC can clean aggersively. Hence better performance than MVCC based "Repeatable Read".   
+            - **Writes:** 
+                - Acquire X lock on row → creates new version → lock held until commit → Prevents other writers
         3. **Repeatable Read: MVCC based**  
-            **Repeatable Read = “What was true when I started?”**    
-            **Reads:**
-            - Snapshot is held for entire transaction.
-            - Even if the transaction is idle: Old versions must be kept alive.
-            - Garbage collection is blocked, Old versions pile up.
-
-            **Writes:**
-            - Same as Read committed.
+            - **Repeatable Read = “What was true when I started?”**    
+            - **Reads:**
+                - Snapshot is held for entire transaction.
+                - Even if the transaction is idle: Old versions must be kept alive.
+                - Garbage collection is blocked, Old versions pile up.
+            - **Writes:**
+                - Same as Read committed.
         4. **Serializable:**
             - f
 
