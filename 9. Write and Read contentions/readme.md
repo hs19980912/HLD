@@ -58,7 +58,7 @@
     - **Read anamolies**:
         - **Dirty read**: A Tx reads uncommitted data written by another Tx (Reading data that was never committed).
         - **Non-repeatable read**: A Tx reads the same row twice and gets different values (Reading commited data that later got changed).
-        - **Pantom read**: same query predicate, different rows returned after another transaction’s committed insert/delete.
+        - **Pantom read**: Same query predicate, different rows returned after another transaction’s committed insert/delete.
     - **Isolation levels:**
         ```
         | Isolation Level  | Dirty Reads  | Non-Repeatable Reads | Phantom Reads |
@@ -76,7 +76,8 @@
         - **Note:** Modern databases uses MVCC based isolation levels.
         1. **Read uncommited:** 
             - No locks.
-        2. **Read commited: MVCC based**  
+        2. **Read Commited: MVCC based**  
+            **Read Committed = “What’s true right now?”**  
             **Reads:** 
             - No shared lock → Read from a snapshot (Snapshot is per statement) → Never block writes
             - Performance:
@@ -88,10 +89,32 @@
             **Writes:** 
             - Acquire X lock on row → creates new version → lock held until commit → Prevents other writers
         3. **Repeatable Read: MVCC based**  
+            **Repeatable Read = “What was true when I started?”**    
             **Reads:**
-            - f
+            - Snapshot is held for entire transaction.
+            - Even if the transaction is idle: Old versions must be kept alive.
+            - Garbage collection is blocked, Old versions pile up.
 
             **Writes:**
+            - Same as Read committed.
+        4. **Serializable:**
+            - f
+
+- **MVCC terminology: (Multiversion Concurrency Control)**
+    1. **Snapshot:**
+        - A snapshot is a logical view of the database that defines which committed changes are visible to a transaction at a specific point in time. IT IS NOT A COPY OF THE DATA. Think of them more like a filter.
+        - **Snapshots Are Cheap to Create**
+            - Creating a snapshot means:
+                - Recording a few transactions IDs
+                - Updating visibility metadata
+            - No data copying → O(1) operation
+        - **Snapshots Are Expensive to Hold**
+            - As long as your snapshot exists:
+                - Old row versions cannot be deleted.
+                - Garbage collection must wait.
+            - Thats why long transactions hurt MVCC systems.
+
+
 
 
 ## Write contention
