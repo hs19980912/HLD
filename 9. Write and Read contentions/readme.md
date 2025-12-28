@@ -96,7 +96,42 @@
             - **Writes:**
                 - Same as Read committed.
         4. **Serializable:**
-            - f
+            - Serializable isolation guarantees that the outcome of concurrent transactions is equivalent to some serial (one-after-another) execution order.
+            - Serializable does NOT mean:
+                - Transactions literally run one-by-one
+                - The DB uses a single thread
+                - Reads always block writes
+            - How Serializable Is Implemented (Two Main Ways):
+                1. **Strict Two-Phase Locking (2PL) (Pessimistic Serializable) - Old approach**
+                    - HEAVY BLOCKING
+                    - Transactions acquire locks before accessing data, it locks all matching rows, and the range/predicate itself so new matching rows can be added later.
+                    - Locks are held until commit.
+                    - Uses range, predicate and range locks.
+                    - Prevents conflicting operations upfront.
+                    - Major Shortcomings:
+                        - Heavy blocking - Reads block writes, Writes block read.
+                        - Low concurrency.
+                2. **Serializable Snapshot Isolation (SSI) - Modern Approach**
+                    - AVOIDS READ BLOCKING
+                    - Used by modern MVCC DBs
+                    - Transactions run using snapshots (like Repeatable Read)
+                    - DB tracks:
+                        - Read → write dependencies.
+                        - Write → read dependencies.
+                        - Predicate reads.
+                    - DB builds a dependency graph.
+                        - If a cycle appears, then the Txs are not serializable.
+                        - DB aborts one transaction / Retries.
+                    - Why this prevents all anomalies
+                        - Any invariant violation implies a non-serializable schedule.
+                        - Such non-serializable schedules are detected.
+                        - One transaction is rolled back.
+                        - Business correctness emerges automatically.
+                    - Why SSI is still expensive
+                        - Dependency tracking overhead
+                        - Abort + retry cost
+                        - predicate conflicts are complex.
+                        - But it avoids read blocking which is crucial to scale.
 
 - **MVCC terminology: (Multiversion Concurrency Control)**
     1. **Snapshot:**
