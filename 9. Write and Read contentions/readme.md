@@ -114,7 +114,7 @@
                         - Low concurrency.
                 2. **Serializable Snapshot Isolation (SSI) - Modern Approach**
                     - AVOIDS READ BLOCKING
-                    - Used by modern MVCC DBs
+                    - Used by modern MVCC DBs + MVCC + optimistic validation.
                     - Transactions run using snapshots (like Repeatable Read)
                     - DB tracks:
                         - Read → write dependencies.
