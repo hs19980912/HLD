@@ -55,6 +55,7 @@
 - **Isolation level**
     - SQL isolation levels define how visible other transactions changes are to a running transaction.
     - Isolation level in a way determins the concurrecncy level a system can handle.
+    - **Note:** Isolation levels are defined by SQL, but the concurrency and isolation concepts they represent apply broadly across both SQL and non-SQL databases.
     - **Read anamolies**:
         - **Dirty read**: A Tx reads uncommitted data written by another Tx (Reading data that was never committed).
         - **Non-repeatable read**: A Tx reads the same row twice and gets different values (Reading commited data that later got changed).
