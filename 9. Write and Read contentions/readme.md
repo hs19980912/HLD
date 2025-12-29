@@ -159,42 +159,80 @@
     1. **Pessimistic concurrency control**: 
     2. **Optimistic concurrency control**
 
-- __Pessimistic locking__:
-    - What is a lock?
-        - It is simply **Shared state + enforcement logic** that everyone agrees to respect.
-    - Where does this lock live?
-        - On some authoritative component that all writers must talk to.
-    - In distributed systems, this authority can live in three main places:
-        1. Locks inside a Database (Row / Table Locks)
-        2. Distributed Locks (External Lock Service)
-        3. Leader-Based Systems (Implicit Locking)
-    - In pessimistic locking, reads blocks write and write blocks reads.
-    - **Locks inside a Database (Row / Table Locks)**:
-        - f
-    - **Distributed Locks (External Lock Service)**:
-        - f
-    - **Leader-Based Systems (Implicit Locking)**:
-        - Most important one in modern distributed systems.
-        - Instead of explicit locks, Only one node is allowed to write. Others are forbidden "by design".
-        - Mental model: “You don’t need locks if only one writer exists.” The leader implicitly holds the lock.
-        - Examples:
-            - Kafka → partition leader
-            - Raft / Paxos → leader node
-            - Primary-replica databases
-            - Dynamo-style quorum leaders
-        - **Kafka**: Each partition has one leader, Producers write only to leader. Followers replicate, No write-write conflict possible.
-        - **Primary DB**: Writes go only to primary. Replicas are read-only. Primary crash → new leader elected.
-        - Why this scales better:
-            - No per-record locks.
-            - No waiting clients.
-            - Serialization happens naturally.
-        - Real-world usage:
-            - Event logs
-            - Messaging systems
-            - Metadata services
-            - Consensus systems
+- **Pessimistic concurrency control:**
+    - Pessimistic Concurrency Control assumes conflicts are likely and prevents them by locking data before access.
+    - Reads: Aquire shared locks, may block writers.
+    - Writes: Aquire exclusive locks. Block everyone else.
+    - locks are held until commit.
+    - **Pessimistic locking:**
+        - What is a lock?
+            - It is simply **Shared state + enforcement logic** that everyone agrees to respect.
+        - Where does this lock live?
+            - On some authoritative component that all writers must talk to.
+        - In distributed systems, this authority can live in three main places:
+            1. Locks inside a Database (Row / Table Locks)
+            2. Distributed Locks (External Lock Service)
+            3. Leader-Based Systems (Implicit Locking)
+        - In pessimistic locking, reads blocks write and write blocks reads.
+        - **Locks inside a Database (Row / Table Locks)**:
+            - f
+        - **Distributed Locks (External Lock Service)**:
+            - f
+        - **Leader-Based Systems (Implicit Locking)**:
+            - Most important one in modern distributed systems.
+            - Instead of explicit locks, Only one node is allowed to write. Others are forbidden "by design".
+            - Mental model: “You don’t need locks if only one writer exists.” The leader implicitly holds the lock.
+            - Examples:
+                - Kafka → partition leader
+                - Raft / Paxos → leader node
+                - Primary-replica databases
+                - Dynamo-style quorum leaders
+            - **Kafka**: Each partition has one leader, Producers write only to leader. Followers replicate, No write-write conflict possible.
+            - **Primary DB**: Writes go only to primary. Replicas are read-only. Primary crash → new leader elected.
+            - Why this scales better:
+                - No per-record locks.
+                - No waiting clients.
+                - Serialization happens naturally.
+            - Real-world usage:
+                - Event logs
+                - Messaging systems
+                - Metadata services
+                - Consensus systems
 
 
-- **Optimistic concurrency**
-    - 
+- **Optimistic concurrency control**
+    - Optimistic concurrency control assumes conflicts are rare, lets transactions proceed without blocking, and checks for conflicts only at commit time. If conflict is found → **abort & retry**.
+    - OCC mainly has 3 logical phases:
+        1. Read phase
+            - Transactions reads data.
+            - No locks are taken.
+            - Reads are from a snapshot or latest committed state.
+        2. Validation phase
+            - At commit time DB checks:
+                - Did someone else modify data I read?
+                - Did someone else write conflicting data?
+            - If yes → conflict → abort.
+            - If no → safe to commit.
+        3. Write phase
+            - Chages are made visible.
+            - Versions updated.
+            - Commit succeeds.
+    - OCC examples:
+        - MVCC + validation
+        - Serializable Snapshot Isolation (SSI)
+        - CAS (Compare-And-Swap)
+        - Version columns
+        - ETags in HTTP
+    - **Note:** MVCC ≠ OCC
+        - MVCC handles read-write contention.
+        - OCC handles write-write conflicts.
+        - Modern systems uses both MVCC for reads + OCC for writes.
+    - OCC examples:
+        - Version / Timestamp based OCC
+            - Each record has a version number or timestamp
+            - Reader remembers the version
+            - Writer checks version hasn’t changed
+        - HTTP / API-Level OCC (ETags)
+        - Serializable Snapshot Isolation (SSI)
+        - Compare-And-Swap (CAS) / Conditional Writes
 
